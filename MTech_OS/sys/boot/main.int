@@ -1,0 +1,11 @@
+--Activate Login Protocols
+local applicationQueue = {
+								function()
+									os.run( {}, "sys/programs/security/anti-virus") --Alwasy ran at login, disabled when user logs in
+								end,
+								function()
+									os.run( {}, "sys/boot/portal")
+								end
+}
+
+local stat = pcall(function() parallel.wairForAny(unpack(applicationQueue))end)

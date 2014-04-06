@@ -1,0 +1,81 @@
+--Globals
+local toggleState = true
+local anti = true
+local startup_protect = true
+local server_sync = false
+local w,h = term.getSize()
+
+local function displayToggleState(variableStateIdentifier)
+	local sw,sh = term.getCursorPos()
+	if variableStateIdentifier == true then
+		term.setTextColor(colors.white)
+		term.setBackgroundColor(colors.green)
+		term.write(" On ")
+	else
+        term.setTextColor(colors.white)
+		term.setBackgroundColor(colors.red)
+		term.write(" Off ")
+	end
+	term.setBackgroundColor(colors.blue)
+	return sw,sh,term.getCursorPos()
+end
+
+local function drawScreen()
+	term.setBackgroundColor(colors.blue)
+	term.clear()
+	term.setCursorPos(1,1)
+	term.write("Enabled:         ")
+	displayToggleState(toggleState)
+	print()
+	print()
+	term.write("Anti-Virus:      ")
+	displayToggleState(anti)
+	print()
+	print()
+	term.write("Startup Protect: ")
+	displayToggleState(startup_protect)
+	print()
+	print()
+	term.write("Server Sync:     ")
+	displayToggleState(server_sync)
+	print()
+	print()
+	term.write("Security is ")
+	print(toggleState)
+	term.setCursorPos(1,h-1)
+	term.write(" [Save] ")
+end
+
+
+
+drawScreen()
+while true do
+	p = {os.pullEvent()}
+	if p[1] == "mouse_click" and p[3] > string.len("Enabled:         ") and p[3] < string.len(" Off ") + string.len("Enabled:         ") and p[4] == 1 and toggleState == false then
+		toggleState = true
+	elseif  p[1] == "mouse_click" and p[3] > string.len("Enabled:         ") and p[3] < string.len(" On ") + string.len("Enabled:         ") and p[4] == 1 and toggleState == true then
+		toggleState = false
+		anti = false
+		startup_protect = false
+		server_sync = false
+	elseif p[1] == "mouse_click" and p[3] > string.len("Anti-Virus:      ") and p[3] < string.len(" Off ") + string.len("Anti-Virus:      ") and p[4] == 3 and anti == false then
+		anti = true
+	elseif p[1] == "mouse_click" and p[3] > string.len("Anti-Virus:      ") and p[3] < string.len(" On ") + string.len("Anti-Virus:      ") and p[4] == 3 and anti == true then
+		anti = false
+	elseif p[1] == "mouse_click" and p[3] > string.len("Startup Protect: ") and p[3] < string.len(" Off ") + string.len("Startup Protect: ") and p[4] == 5 and startup_protect == false then
+		startup_protect = true
+	elseif p[1] == "mouse_click" and p[3] > string.len("Startup Protect: ") and p[3] < string.len(" On ") + string.len("Startup Protect: ") and p[4] == 5 and startup_protect == true then
+		startup_protect = false
+	elseif p[1] == "mouse_click" and p[3] > string.len("Anti-Virus:      ") and p[3] < string.len(" Off ") + string.len("Server Sync:     ") and p[4] == 7 and server_sync == false then
+		server_sync = true
+	elseif p[1] == "mouse_click" and p[3] > string.len("Anti-Virus:      ") and p[3] < string.len(" On ") + string.len("Server Sync:     ") and p[4] == 7 and server_sync == true then
+		server_sync = false
+	elseif p[3] > 0 and p[3] <= string.len(" [Save] ") and p[4]==h-1 then
+		break
+	end
+	drawScreen()
+end 
+
+local handle = fs.open("security","w")
+handle.write("<main><security><enabled>"..tostring(toggleState).."</enabled><anti-virus>"..tostring(anti).."</anti-virus><startup_ps>"..tostring(startup_protect).."</startup_ps><server_sync>"..tostring(server_sync).."</server_sync></security></main>")
+handle.close()

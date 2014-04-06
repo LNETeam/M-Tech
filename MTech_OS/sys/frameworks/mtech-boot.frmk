@@ -1,0 +1,141 @@
+--Info: Handles bootup and shutdown operations for MTech Engine
+function checkBootAuth(al)
+	shell.setDir("")
+	if !fs.exists(".os-boot") or !shell.getRunningProgram()=="/startup" then
+		if al then
+
+		end
+		return false
+	else
+		shell.setDir(".os-boot")
+		return true
+	end
+end
+
+function runError(errCode)
+	local errCodeLibrary = fs.open("lib/errors/" + errCode + ".libx", "r")
+	local data = errCodeLibrary.readAll()
+	errCodeLibrary.close()
+	if repairController()=="reboot" then
+		os.reboot()
+	elseif repairController()=="repair" then
+		repairMode()
+	end
+end
+
+local function drawErrorRe(errData,errCode)
+	local options = {">[Reboot]     ","[Repair]"}
+	term.setBackgroundColor("blue")
+	term.clear()
+	term.setCursorPos(1,1)
+	local w,h = term.getSize()
+	x = math.floor(w/2)
+	y = math.floor(h/2)
+	term.setBackgroundColor("white")
+	
+	term.setCursorPos(1,1)
+	term.clearLine()
+	term.setCursorPos(1,1)
+	term.write("An error occured: " + errCode)
+	term.setCursorPos(x-10,y-3)
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.setCursorPos(x-getStartX("Error"),y-3)
+	term.write("Error:")
+	term.setCursorPos(x-getStartX(errData),y-2)
+	term.write(errData)
+	term.setCursorPos(1,h)
+	term.clearLine()
+	term.setCursorPos(1,h)
+	for k,v in pairs(options) do
+		term.write(v)
+	end
+end
+
+local function drawErrorRep(errData,errCode)
+	local options = {"[Reboot]    >","[Repair]"}
+	term.setBackgroundColor("blue")
+	term.clear()
+	term.setCursorPos(1,1)
+	local w,h = term.getSize()
+	x = math.floor(w/2)
+	y = math.floor(h/2)
+	term.setBackgroundColor("white")
+	term.setCursorPos(1,1)
+	term.clearLine()
+	term.setCursorPos(1,1)
+	term.write("An error occured: " + errCode)
+	term.setCursorPos(x-10,y-3)
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.write("                    ")
+	term.setCursorPos(x-getStartX("Error"),y-3)
+	term.write("Error:")
+	term.setCursorPos(x-getStartX(errData),y-2)
+	term.write(errData)
+	term.setCursorPos(1,h)
+	term.clearLine()
+	term.setCursorPos(1,h)
+	for k,v in pairs(options) do
+		term.write(v)
+	end
+
+end
+
+local function repairController(errData,errCode)
+	local currentSelection = 0
+	local selected = false
+	order = {}
+	order.reboot = "reboot"
+	order.repair = "repair"
+	while not selected do
+		if currentSelection == 0 then
+			drawErrorRe(errData,errCode)
+		elseif currentSelection == 1 then
+			drawErrorRep(errData,errCode)
+		end
+		local k = {os.pullEvent()}
+		if k[0] == "205" then
+			currentSelection = 1
+		elseif k[0] == "203" then
+			currentSelection = 0
+		elseif k[0] == "28" then
+			selected = true
+		end
+	end
+	if selected == 0 then
+		return order.reboot 
+	else
+		return order.repair
+	end
+end
+
+local function getStartX(phrase)
+	local length = string.len(phrase)/2
+	return length
+end
+
+function generateRecoveryInformationFromManifest(manifest_file)
+
+end
+
+function verifyVersionIdentity(manifest_file, bootVersion)
+
+end
+
+function verifyInstallID(manifest_file)
+
+end
+
+local function repairMode()
+	term.setBackgroundColor("black")
+	term.clear()
+	local 
+end
