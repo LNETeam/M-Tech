@@ -1,0 +1,205 @@
+--Developed by LNETeam
+--Please respect Open Source and due credit
+--Object implemention credited to LYQYD
+
+--Enumerations for dialog options
+new = {}
+dEnums = {yesno = "yn",okcancel = "okc",ok = "ok",}
+pEnums = {topleft = "tl",topRight = "tr",center = "c",}
+
+instanceCounter = 
+{
+	dialog = 0,
+	slider = 0,
+	button = 0,
+	background = 0,
+	backgroundPager = 0,
+}
+
+instanceManager = {}
+
+local dialog = 
+{
+	define = function(self,buttonColor,stripColor,bodyColor,textColor,hp)
+		self.colorSet = 
+		{
+			bColor = buttonColor,
+			toolStrip = stripColor,
+			bColor = bodyColor,
+			tColor = textColor,
+		}
+	end,
+	show = function(self)
+
+	end,
+}
+
+local slider = 
+{
+	draw = function(self,xCorner,yCorner,lColor,rColor)
+
+	end,
+}
+
+local button = 
+{
+	draw = function(self)
+
+	end,
+	run = function(self)
+}
+
+local toggleStateButton =
+{
+	draw = function(self)
+
+	end,
+}
+
+local background = 
+{
+	define = function(self,func)
+		if not self.override then
+			error("object not overriden",2)
+		end
+		self.displayOverride = func
+	end,
+	draw = function(self,...)
+		if not self.override and not self.displayOverride then
+			term.setBackgroundColor(self.background)
+			term.clear()
+			term.setCursorPos(1,1)
+			term.setBackgroundColor(self.statBar)
+			term.clearLine()
+			term.setBackgroundColor(self.background)
+			term.setTextColor(self.textColor)
+			term.setCursorPos(1,2)
+			print("Hi")
+		elseif self.override and not self.displayOverride then
+			error("no override function given",2)
+		else --Custom implementation of draw function, pass in any parameters you want. Handle a table as a master parameter
+			args = {...}
+			self.displayOverride(unpack(args))
+		end	
+	end,
+}
+
+local backgroundPager =
+{
+	add = function(self, ...)
+		local ps = {...}
+		for k,v in ipairs(ps) do
+			table.insert(self.backgroundSet,v)
+			table.insert(self.backgroundSetID,v.id)
+		end
+		return tostring(#self.backgroundSet)
+	end,
+	page = function(self, ...)
+		local args = {...}
+		if args[1] == "1" then
+			self.currentSet = self.currentSet + 1
+			self:draw(self.currentSet)
+		elseif args[1] == "0" then
+			self.currentSet = self.currentSet-1
+			self.draw(self.currentSet)
+		end
+		return self.currentSet
+	end,
+}
+
+--Instantiate new dialog object
+function new.dialog(ident,header,text,type,buttonSet)
+	local temp = 
+	{
+		id = instanceManager.addID("dialog"),
+		h = header,
+		message = text,
+		options = type,
+		colorSet = {},
+		buttonMode = pEnums.buttonSet,
+	}
+	setmetatable(temp, {__index = dialog})
+	return temp
+end
+
+--Instantiate new slider object
+function new.slider(opts)
+	local temp = {
+		id = instanceManager.addID("slider"),
+		values = opts,
+		currentValue = nil,
+	}
+	setmetatable(temp, {__index = slider})
+	return temp
+end
+
+--Instantiate new button object
+function new.button(lengthX,lengthY,colorB)
+	local temp = 
+	{
+		id = instanceManager.addID("button"),
+		map = {},
+		length = lengthX,
+		width = lengthY,
+		backgroundColor = colorB,
+	}
+	setmetatable(temp, {__index = button})
+	return temp
+end
+
+--Instantiate new toggle button object
+function new.toggleStateButton(clickMap,trueC,falseC,currentState)
+	local temp = 
+	{
+		id = instanceManager.addID("toggleStateButton"),
+		map = {},
+		colorTrue = trueC,
+		colorFalse = falseC,
+		active = currentState,
+	}
+	setmetatable(temp, {__index = toggleStateButton})
+	return temp
+end
+
+function new.background(bColor,barCol,colorT, ...)
+	local args = {...}
+	local o = false
+	if #args > 0 and #args < 2 then
+		if args[1] == true then
+			o = true
+		elseif args[1] == false then
+			o = false
+		else
+			error("invalid override parameter",2)
+		end
+	end
+	local temp = 
+	{
+		id = instanceManager.addID("background"),
+		background = bColor,
+		statBar = barCol,
+		textColor = colorT,
+		override = o,
+		displayOverride = nil,
+	}
+	setmetatable(temp, {__index = background})
+	return temp
+end
+
+function new.backgroundPager()
+	local temp = 
+	{
+		id = instanceManager.addID("backgroundPager"),
+		backgroundSet = {},
+		backgroundSetID = {},
+		currentSet = 0,
+	}
+	setmetatable(temp, {__index = backgroundPager})
+	return temp
+end
+
+--Instance managing
+function instanceManager.addID(type)
+	local id = instanceCounter[type]+1
+	return id
+end
