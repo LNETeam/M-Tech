@@ -14,6 +14,9 @@ instanceCounter =
 	button = 0,
 	background = 0,
 	backgroundPager = 0,
+	uischeme = 0,
+	dropdownmenu = 0,
+	errid = 0,
 }
 
 instanceManager = {}
@@ -47,12 +50,99 @@ local button =
 
 	end,
 	run = function(self)
+
+	end,
 }
 
 local toggleStateButton =
 {
 	draw = function(self)
 
+	end,
+}
+
+local UIScheme = 
+{
+	load = function(self)
+		term.setBackgroundColor(self.bg)
+		term.setTextColor(self.fg)
+	end,
+}
+
+local errid = 
+{
+	draw = function(self)
+
+	end,
+	handleEvents = function(self,...)
+
+	end,
+}
+
+local dropdownmenu = 
+{
+	handleEvents = function(self,args)
+		local tArgs = args
+		if tArgs[1] == "mouse_click" then
+			if tArgs[3] >= self.startX and tArgs[3] <= (self.startX+self:determine()) and tArgs[4] == self.startY and self.menuIndex == 0 then
+				self.menuIndex = 1
+				return "super_open_click"
+			elseif tArgs[3] >= self.startX and tArgs[3] <= (self.startX+self:determine()) and tArgs[4] == self.startY and self.menuIndex == 1 then
+				return "super_close_click"
+			elseif tArgs[3] >= self.startX and tArgs[3] <= (self.startX+self:determine()) and self.menuIndex==1 then
+				local opt = 0
+				local diff = math.abs(self.y-tArgs[4])
+				for k,v in ipairs(self.options) do
+					if tArgs[4] == self.startY+k+1 then
+						opt = k+1
+						self.menuIndex = 0
+						local returns = {"element_clicked", opt}
+						return returns
+					end
+				end
+				return(tArgs)
+			else
+				if self.menuIndex == 1 then
+					self.menuIndex = 0
+				end
+				return(tArgs)
+			end
+		else
+			return(tArgs)
+		end
+	end,
+	action = function(self,args)
+		local tArgs = args
+		local eventData = self:handleEvents(tArgs)
+		if eventData[1] == "element_clicked" then
+			local program = self.functions[eventData[2]-1]
+			program()
+		end
+		return(unpack(tArgs))
+	end,
+	determine = function(self)
+		local z = 0
+		for k,v in pairs(self.options) do
+			if string.len(v) > z then
+				z = v
+			end
+		end
+		return z
+	end,
+	draw = function(self)
+		term.setTextColor(colors.black)
+		if self.menuIndex == 0 then
+			term.setBackgroundColor(colors.white)
+			term.setCursorPos(self.startX,self.startY)
+			term.write(self.options[1])
+		elseif self.menuIndex == 1 then
+			term.setBackgroundColor(colors.white)
+			term.setCursorPos(self.startX, self.startY)
+			for k,v in ipairs(self.options) do
+				term.setCursorPos(self.startX,self.startY+k)
+				term.write(v)
+			end
+		end
 	end,
 }
 
@@ -101,7 +191,7 @@ local backgroundPager =
 			self:draw(self.currentSet)
 		elseif args[1] == "0" then
 			self.currentSet = self.currentSet-1
-			self.draw(self.currentSet)
+			self:draw(self.currentSet)
 		end
 		return self.currentSet
 	end,
@@ -195,6 +285,45 @@ function new.backgroundPager()
 		currentSet = 0,
 	}
 	setmetatable(temp, {__index = backgroundPager})
+	return temp
+end
+
+function new.UIScheme(background,textColor)
+	local temp = 
+	{
+		id = instanceManager.addID("uischeme"),
+		bg = background,
+		fg = textColor,
+	}
+	setmetatable(temp, {__index = UIScheme})
+	return temp
+end
+
+function new.dropdownmenu(x,y,elements,elementFuncs)
+	local temp = 
+	{
+		id = instanceManager.addID("dropdownmenu"),
+		startX = x,
+		startY = y,
+		options = elements,
+		functions = elementFuncs,
+		menuIndex = 0,
+	}
+	setmetatable(temp, {__index = dropdownmenu})
+	return temp
+end
+
+function new.errid(dur,event,topPadding,padding,bottomPadding)
+	local temp =
+	{
+		id = instanceManager.addID("errid"),
+		eventData = event,
+		duration = dur,
+		paddingTop = topPadding,
+		pad = padding,
+		paddingBottom = bottomPadding,
+	}
+	setmetatable(temp, {__index = errid})
 	return temp
 end
 
