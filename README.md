@@ -42,14 +42,13 @@ This OS, developed by Laney Network Technologies, is designed to provide a secur
 
 ### Helpful Info ###
 
-Application Extensions:
 * Framework (.frmk) - Should not be altered (customization can be found in settings app). Contain vital information and methods to run OS.
-* Application File (.af) - Simply a program provided by M-Tech. Third party apps must include this extension to be searchable in M-Tech
+* Application File (.af) - Simply a program provided by M-Tech. Third party apps must include this extension to be searchable in M-Tech.
 * API File (.apf) - Contains third-party APIs. APIs installed will contain this extension for discovery during file creation and file management.
 * Install Manifest (.im) - Install manifest outlines instructions for app installer to use
-* Interface File (.int) - Contains GUI and interface information
-* Virtual OS Config (.vmcx) - Contain information regarding Virtual OS settings and app states (don't alter unless you know what you're doing)
-* Config Files (.cfg) - Files containing tables of system config information
-* Boot Manifest (.bm) - These files should not be messed with. Doing so may result in system crashes, instability, and data loss. They contain shutdown and boot-up information that point to certain events to occur
+* Interface File (.int) - Contains GUI and interface information.
+* Virtual OS Config (.vmcx) - Contain information regarding Virtual OS settings and app states (don't alter unless you know what you're doing).
+* Config Files (.cfg) - Files containing tables of system config information.
+* Boot Manifest (.bm) - These files should not be messed with. Doing so may result in system crashes, instability, and data loss. They contain shutdown and boot-up information that point to certain events to occur.
 
 Get your M-Tech OS today!
