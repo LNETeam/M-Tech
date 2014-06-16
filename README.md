@@ -43,7 +43,7 @@ This OS, developed by Laney Network Technologies, is designed to provide a secur
 ### Helpful Info ###
 
 Application Extensions:
-* Framework (.frmk) - Should not be altered (customization can be found in settings app). Contain vital information and methods to run OS
+* Framework (.frmk) - Should not be altered (customization can be found in settings app). Contain vital information and methods to run OS.
 * Application File (.af) - Simply a program provided by M-Tech. Third party apps must include this extension to be searchable in M-Tech
 * API File (.apf) - Contains third-party APIs. APIs installed will contain this extension for discovery during file creation and file management.
 * Install Manifest (.im) - Install manifest outlines instructions for app installer to use
