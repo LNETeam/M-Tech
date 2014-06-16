@@ -42,6 +42,9 @@ This OS, developed by Laney Network Technologies, is designed to provide a secur
 
 ### Helpful Info ###
 
+* C-Chat: A P2P chatting program that can communicate in a chatroom with invited members. Can send files and customize UI look.
+
+* C-Chat: A P2P chatting program that can communicate in a chatroom with invited members. Can send files and customize UI look.
 Application Extensions:
 * Framework (.frmk) - Should not be altered (customization can be found in settings app). Contain vital information and methods to run OS
 * Application File (.af) - Simply a program provided by M-Tech. Third party apps must include this extension to be searchable in M-Tech
