@@ -1,0 +1,88 @@
+--BEGIN | SECURITY CHECK
+homeDir = "/sys/program_files/lyqdOS"
+
+shell.setDir(homeDir)
+
+old_shell = shell.setDir
+old_dir = shell.dir
+old_exists = fs.exists
+old_mkdir = fs.makeDir
+old_delete = fs.delete
+
+function setDir(dir)
+	if dir == "" or dir == "/" then
+		old_shell(homeDir)
+	elseif dir == ".." then
+		if old_dir() ~= homeDir then
+			shell.run("cd ..")
+		end
+	else
+		old_shell(fs.combine(homeDir,dir))
+	end
+end
+
+function dir()
+	if old_dir() == homeDir then
+		return "/"
+	else
+		local idx = string.find(old_dir(),homeDir)
+		return string.sub(old_dir(),idx+string.len(homeDir))
+	end
+end
+
+function exists(file)
+	local name = fs.combine(homeDir,file)
+	if old_exists(name) then
+		return true
+	else
+		return false
+	end
+end
+
+function makeDir(dir)
+	local name = fs.combine(homeDir,dir)
+	old_mkdir(name)
+end
+
+function delete(file)
+	if not file then
+		error("Expected string, got nil",2)
+	end
+	if not string.find(file,homeDir) then
+
+	else
+		local idx = string.find(file,homeDir)
+		local p = string.sub(file,idx+string.len(homeDir.."/"))
+		old_delete(p)
+		return true
+	end
+end
+
+shell.setDir = setDir
+shell.dir = dir
+fs.delete = delete
+fs.makeDir = makeDir
+fs.exists = exists
+
+--END SECURITY CHECK
+
+function main()
+while true do
+	term.clear()
+	term.setCursorPos(1,1)
+	print("Current Simulated Env: " .. shell.dir())
+	print("Real Env: " .. old_dir())
+	term.write("Change: ")
+	input = read()
+	shell.setDir(input)
+	sleep(.01)
+end
+end
+
+local stat,err = pcall(main)
+
+if not stat then
+	print(err)
+	shell.setDir = old_shell
+	shell.dir = old_dir
+end
