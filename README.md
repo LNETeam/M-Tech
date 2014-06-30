@@ -14,6 +14,7 @@ This OS, developed by Laney Network Technologies, is designed to provide a secur
 * OS Emulator - want to test drive another OS without over writing yours? Install your OS on an emulator!
 * Complete customization!
 * Guarenteed security with CAuth framework
+* Network port manager. Communicate with other computers and services via Port Controller.
 
 ### So how do I set this up? ###
 
