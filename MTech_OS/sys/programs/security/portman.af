@@ -1,1 +1,89 @@
 --Developed by Laney Network Technologies for use with M-Tech Operating System. Any other use without consent of the owning party is prohibited
+local interfaces = {}
+local new = {}
+
+--Firewall Object for monitoring data that comes across on the channels ("ports")
+Firewall = 
+{
+    addRule = function(self)
+        
+    end,
+    send = function(self,port)
+        
+    end,
+    receive = function(self)
+        
+    end,
+    rmRule = function(self)
+    
+    end,
+    testACL = function(self,port,acl)
+    
+    end,
+}
+
+interface = 
+{
+    
+}
+
+--Access Control List configuration, allows for fine tuning of input data
+ACL = 
+{
+    addConfig = function(self)
+        term.clear()
+        term.setCursorPos(1,1)
+        local t = false
+        local t2 = false
+        while not t and not t2 do
+            print()
+            input = read()
+            if not t and not t2 then
+                t = (input == "") and true or false
+            elseif t and not t2 then
+                t2 = (input == "") and true or false
+            else
+                self.rule = self.rule .. "\n" .. input
+            end
+        end
+        print("Done.")
+        self:testCfg()
+    end,
+    testCfg = function(self)
+        local lines = {}
+        for w in (self.rule .. "\n"):gmatch("([^;]*)\n") do 
+            table.insert(lines, w) 
+        end
+        for i=0,#lines do
+             
+        end
+    end,
+}
+
+--This example points to the host name (local computer) and assigns this ACL config to the interface 'lan-0-0' with ACL name 54. This allows "ports" 56 and 360 to be allowed, and deny prevents anything after that
+local examplOutputConfig = [[
+    hostname 10.0.0.0
+    interface lan-0-0 54
+    
+    ip access-list 54
+     permit any any 10.0.0.0 56
+     permit any any 10.0.0.0 360
+     deny any any log
+]]
+
+function new.firewall(inttomon)
+    local temp = 
+    {
+        interfaces = {},
+    }
+    setmetatable(temp, {__index = Firewall})
+    return temp
+end
+
+function new.interface(name, access)
+    local temp = 
+    {
+        name = name,
+        acl = access
+    }
+end
