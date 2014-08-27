@@ -1,0 +1,37 @@
+install = 
+{
+    preAction = function()
+        if (fs.exists("/sys")) then
+            fs.delete("/sys")
+        end
+    end,
+    Dependencies = {"ccgit"},
+    InstallHierarchy = 
+    {
+        {"/M-Tech/startup","/startup"},
+        {"/M-Tech/sys/boot/main.int","/sys/boot/main.int"},
+        {"/M-Tech/sys/boot/portal.int","/sys/boot/portal.int"},
+        {"/M-Tech/sys/boot/version.info","/sys/boot/version.info"},
+        {"/M-Tech/sys/boot/~iso-temp/BIOS","/sys/boot/~iso-temp/BIOS"},
+        {"/M-Tech/sys/boot/~iso-temp/bootstrap","/sys/boot/~iso-temp/bootstrap"},
+        {"/M-Tech/sys/config/bootPrefs.cfg","/sys/config/bootPrefs.cfg"},
+        {"/M-Tech/sys/config/sys.cfg","/sys/config/sys.cfg"},
+        {"/M-Tech/sys/frameworks/CAUTH.frmk","/sys/frameworks/CAUTH.frmk"},
+        {"/M-Tech/sys/frameworks/CUIKit.frmk","/sys/frameworks/CUIKit.frmk"},
+        {"/M-Tech/sys/frameworks/kernel.frmk","/sys/frameworks/kernel.frmk"},
+        {"/M-Tech/sys/frameworks/mtech-boot.frmk","/sys/frameworks/mtech-boot.frmk"},
+        {"/M-Tech/sys/frameworks/mtech-core.frmk","/sys/frameworks/mtech-core.frmk"},
+        {"/M-Tech/sys/lib/errors/0x001C.libx","/sys/lib/errors/0x001C.libx"},
+        {"/M-Tech/sys/lib/errors/0x001D.libx","/sys/lib/errors/0x001D.libx"},
+        {"/M-Tech/sys/program_files/plc","/sys/program_files/plc"},
+        {"/M-Tech/sys/programs/os/antiviral.af","/sys/programs/os/antiviral.af"},
+        {"/M-Tech/sys/programs/os/dataman.af","/sys/programs/os/dataman.af"},
+        {"/M-Tech/sys/programs/os/hpr","/sys/programs/os/hpr"},
+        {"/M-Tech/sys/programs/security/portman.af","/sys/programs/security/portman.af"},
+        {"/M-Tech/sys/programs/security/togglev2","/sys/programs/security/togglev2"},
+        {"/M-Tech/sys/programs/c-chat.af","/sys/programs/c-chat.af"},
+        {"/M-Tech/sys/programs/vman.af","/sys/programs/vman.af"},
+    },
+    postAction = function() os.reboot() end,
+}
+return install
