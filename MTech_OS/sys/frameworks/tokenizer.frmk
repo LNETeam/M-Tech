@@ -1,0 +1,27 @@
+os.loadAPI("kernel")
+
+new = {}
+
+function new.Tag()
+	local temp = 
+	{
+		tagType = kernel._tagTypes.Text,
+		Name = "",
+		Properties = kernel.new.Dictionary()
+		HasChildren = function() if (#children) > 0 then return true else return false end end,
+		Children = kernel.new.List(),
+		TokenText = ""
+	}
+	return temp
+end
+
+function Parse(segment)
+	tokenizer = new.Tokenizer()
+	ast = kernel.new.List()
+	curParam = ""
+	while (1==1) do
+		tag = new.Tag()
+		token = tokenizer.Token
+		
+	end
+end

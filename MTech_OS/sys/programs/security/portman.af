@@ -2,7 +2,7 @@
 local interfaces = {}
 local new = {}
 
---Firewall Object for monitoring data that comes across on the channels ("ports")
+--Firewall Object for monitoring data that comes across on the channels ("ports"). Can be used with netwisp data for more comprehensive network security
 Firewall = 
 {
     addRule = function(self)
