@@ -117,8 +117,8 @@ end
 
 function testDictionary()
 	local d = new.Dictionary()
-	d:Add("demo","butt")
-	if (d:GetValueFromKey("demo") ~= "butt") then error("Should pass") end
+	d:Add("demo","foo")
+	if (d:GetValueFromKey("demo") ~= "foo") then error("Should pass") end
 	print()
 end
 
