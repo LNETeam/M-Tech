@@ -23,7 +23,6 @@ install =
         {"/MTech_OS/sys/frameworks/mtech-core.frmk","/sys/frameworks/mtech-core.frmk"},
         {"/MTech_OS/sys/lib/errors/0x001C.libx","/sys/lib/errors/0x001C.libx"},
         {"/MTech_OS/sys/lib/errors/0x001D.libx","/sys/lib/errors/0x001D.libx"},
-        {"/MTech_OS/sys/program_files/plc","/sys/program_files/plc"},
         {"/MTech_OS/sys/programs/os/antiviral.af","/sys/programs/os/antiviral.af"},
         {"/MTech_OS/sys/programs/os/dataman.af","/sys/programs/os/dataman.af"},
         {"/MTech_OS/sys/programs/os/hpr","/sys/programs/os/hpr"},
