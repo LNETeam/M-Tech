@@ -14,7 +14,7 @@ local boot_instructions  = {}
 
 --Run decompress to reinitialize the os from shutdown
 function bootCheck()
-	if !bootFrmk.checkBootAuth() then
+	if not bootFrmk.checkBootAuth() then
 		error("0x001C")
 	end
 end
@@ -30,26 +30,30 @@ if bootOkay then
 	local manifest_file_contents = handle.readAll()
 	handle.close()
 	boot_instructions = bootFrmk.generateRecoveryInformationFromManifest(manifest_file_contents)
-	boot_instructions.decompress
+	boot_instructions.decompress()
 	local integratedBootVersion = nil
-	if fs.exists"/sys/boot/version.info") then
+	if fs.exists("/sys/boot/version.info") then
 		local integratedBootVersionHandle = fs.open("/sys/boot/version.info", "r")
 		integratedBootVersion = integratedBootVersionHandle.readAll()
 		integratedBootVersionHandle.close()
 	else
 		error("0x001D")
 	end
-	if !bootFrmk.verifyVersionIdentity(manifest_file_contents,integratedBootVersion) then
+	if not bootFrmk.verifyVersionIdentity(manifest_file_contents,integratedBootVersion) then
 		kernel.throwMismatchLogEvent()
 	end
-	if !bootFrmk.verifyInstallID(manifest_file_contents) then
+	if not bootFrmk.verifyInstallID(manifest_file_contents) then
 		kernel.throwIllegalInstallEvent()
 	end
 	shell.setDir("")
-	if !boot_instructions.checkAndDecompress then
+	if not boot_instructions.checkAndDecompress then
 		kernel.throwDecompressEvent()
 	end
-	shell.run("/sys/boot/main.int")
+	local stack = kernel.new.Stack()
+	stack:Push("/sys/boot/main.int")
+	stack:Push("/sys/frameworks/procman.frmk")
+	shell.run(unpack(stack.internal))
+	
 else
 
 

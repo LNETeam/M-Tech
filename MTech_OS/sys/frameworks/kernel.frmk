@@ -14,7 +14,7 @@ _tokenTypes.TEXT = ""
 _tokenTypes.ERROR = ""
 
 
-local bg = {getfenv()}
+
 --Private Operations
 local stack = 
 {
@@ -117,9 +117,7 @@ end
 
 function testDictionary()
 	local d = new.Dictionary()
-	d:Add("demo","foo")
-	if (d:GetValueFromKey("demo") ~= "foo") then error("Should pass") end
-	print()
+	d:Add("demo","butt")
+	if (d:GetValueFromKey("demo") ~= "butt") then error("Should pass") end
+	print(d:GetValueFromKey("demo"))
 end
-
-testDictionary()
