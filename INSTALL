@@ -32,7 +32,7 @@ install =
         {"/MTech_OS/sys/programs/c-chat.af","/sys/programs/c-chat.af"},
         {"/MTech_OS/sys/programs/vman.af","/sys/programs/vman.af"},
         {"/MTech_OS/sys/programs/os/loader.af","/sys/programs/os/loader.af"},
-        {"/MTech_OS/sys/program_files/Sys32/bootstatus.xml","/sys/program_files/Sys32/bootstatus.xml"},
+        {"/MTech_OS/sys/program_files/Sys32/bootstate.xml","/sys/program_files/Sys32/bootstate.xml"},
         {"/MTech_OS/sys/program_files/assets/boot1","/sys/program_files/assets/boot1"},
         {"/MTech_OS/sys/program_files/assets/boot2","/sys/program_files/assets/boot2"},
         {"/MTech_OS/sys/program_files/assets/boot3","/sys/program_files/assets/boot3"},
