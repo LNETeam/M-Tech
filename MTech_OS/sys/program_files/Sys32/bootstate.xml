@@ -1,0 +1,11 @@
+<program>
+    <app id="">
+        <name>antivirus</name>
+        <path>/sys/programs/os/antiviral.af</path>
+        <args>
+            <p>safemode=0</p>
+            <p>override=0</p>
+        </args>
+        <debug>cleanexit=1</debug>
+    </app>
+</program>
