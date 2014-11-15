@@ -16,7 +16,7 @@ install =
         {"/MTech_OS/sys/boot/~iso-temp/bootstrap","/sys/boot/~iso-temp/bootstrap"},
         {"/MTech_OS/sys/config/bootPrefs.cfg","/sys/config/bootPrefs.cfg"},
         {"/MTech_OS/sys/config/sys.cfg","/sys/config/sys.cfg"},
-        {"/MTech_OS/sys/frameworks/CAUTH.frmk","/sys/frameworks/CAuth.frmk"},
+        {"/MTech_OS/sys/frameworks/CAuth.frmk","/sys/frameworks/CAuth.frmk"},
         {"/MTech_OS/sys/frameworks/CUIKit.frmk","/sys/frameworks/CUIKit.frmk"},
         {"/MTech_OS/sys/frameworks/kernel.frmk","/sys/frameworks/kernel.frmk"},
         {"/MTech_OS/sys/frameworks/mtech-boot.frmk","/sys/frameworks/mtech-boot.frmk"},
