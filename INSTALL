@@ -5,6 +5,7 @@ install =
             fs.delete("/sys")
         end
     end,
+    Dependencies = {},
     InstallHierarchy = 
     {
         {"/MTech_OS/startup","/startup"},
