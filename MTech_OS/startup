@@ -1,1 +1,2 @@
-shell.run("/sys/boot/~iso-temp/bootstrap")
+--shell.run("/sys/boot/~iso-temp/bootstrap")
+shell.run("/sys/programs/os/loader.af")

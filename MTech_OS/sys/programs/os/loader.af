@@ -1,0 +1,36 @@
+local indexer = 1
+local processString
+
+function getCenterX(sText)
+	local nWidth = term.getSize()
+	local x = math.floor(nWidth / 2) - math.floor(string.len(sText) / 2)
+	return x
+end
+
+function getCenterY()
+	local nWidth, nHeight = term.getSize()
+	local y = math.floor(nHeight / 2)
+	return y
+end
+function redraw()
+	term.setBackgroundColor(colors.gray)
+	term.clear()
+	local x = getCenterX("M-Tech OS: Starting up")
+	term.setCursorPos(x,3)
+	term.write("M-Tech OS: Starting up")
+end
+
+while true do
+	path = "/sys/program_files/Sys32/assets/boot"..indexer
+	local tab = paintutils.loadImage(path)
+	redraw()
+	
+	paintutils.drawImage(tab,1,1)
+	sleep(0.05)
+	if indexer < 16 then
+		indexer = indexer +1
+	else
+		indexer = 7
+	end
+end
+
