@@ -1,6 +1,6 @@
 install = 
 {
-    preAction = function()
+    PreAction = function()
         if (fs.exists("/sys")) then
             fs.delete("/sys")
         end
