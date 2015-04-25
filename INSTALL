@@ -52,6 +52,6 @@ install =
         {"/MTech_OS/sys/program_files/Sys32/assets/boot16","/sys/program_files/Sys32/assets/boot16"},
         {"/MTech_OS/sys/program_files/Sys32/assets/boot17","/sys/program_files/Sys32/assets/boot17"},
     },
-    postAction = function() os.reboot() end,
+    PostAction = function() os.reboot() end,
 }
 return install
